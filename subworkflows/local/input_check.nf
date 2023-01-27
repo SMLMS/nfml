@@ -3,6 +3,7 @@
 //
 
 include { SAMPLESHEET_CHECK } from '../../modules/local/samplesheet_check'
+include { ML_TRAIN } from '../../modules/local/mltrain'
 
 workflow INPUT_CHECK {
     take:
@@ -14,6 +15,9 @@ workflow INPUT_CHECK {
         .splitCsv ( header:true, sep:',' )
         .map { create_fastq_channel(it) }
         .set { reads }
+
+    ML_TRAIN (SAMPLESHEET_CHECK.out.csv)
+
 
     emit:
     reads                                     // channel: [ val(meta), [ reads ] ]
