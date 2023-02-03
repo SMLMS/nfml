@@ -3,7 +3,8 @@
 //
 
 include { SAMPLESHEET_CHECK } from '../../modules/local/samplesheet_check'
-include { ML_TRAIN } from '../../modules/local/mltrain'
+include { MODULE_2 } from '../../modules/local/helloworld'
+include { MODULE_3 } from '../../modules/local/whatever'
 
 workflow INPUT_CHECK {
     take:
@@ -16,7 +17,10 @@ workflow INPUT_CHECK {
         .map { create_fastq_channel(it) }
         .set { reads }
 
-    ML_TRAIN (SAMPLESHEET_CHECK.out.csv)
+    MODULE_2( reads )
+        .set {module2output}
+
+
 
 
     emit:
