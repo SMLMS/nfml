@@ -60,10 +60,9 @@ workflow NFML {
 
 
     //
-    // MODULE: Run FastQC
     //
     HELLOWORLD (
-        "whatever"
+        "whatever" "hello world"
     )
 
 }

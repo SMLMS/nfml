@@ -22,7 +22,7 @@ process HELLOWORLD {
     def args = task.ext.args ?: ''
 
     """
-    helloworld.R arg1 arg2 arg3
+    helloworld.R arg1 arg2
     ml-train.R $config_yaml_file
     """
 }
