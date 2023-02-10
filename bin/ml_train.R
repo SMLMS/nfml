@@ -1,4 +1,4 @@
-# v0.3
+#!/usr/bin/env Rscript
 
 # start
 start_time = Sys.time()
@@ -34,15 +34,15 @@ list.features = read.csv(config$file.features.train, header = F)$V1
 # set up trainControl
 # TODO: implement other methods such as jackknife, bootstrap, ...
 trControl = caret::trainControl(
-  method = config$ml.cv$method, 
-  number = as.numeric(config$ml.cv$fold), 
+  method = config$ml.cv$method,
+  number = as.numeric(config$ml.cv$fold),
   repeats = as.numeric(config$ml.cv$repeats))
 
 # train model
 set.seed(as.numeric(config$ml.seed))
 cv_model = caret::train(
-  y = format_y(df.data[list.samples, config$ml.response], config$ml.type), 
-  x = df.data[list.samples, list.features, drop=F], 
+  y = format_y(df.data[list.samples, config$ml.response], config$ml.type),
+  x = df.data[list.samples, list.features, drop=F],
   method = config$ml.method,
   preProcess = config$ml.preprocess,
   trControl = trControl,
@@ -51,7 +51,7 @@ cv_model = caret::train(
   )
 
 # ml run time
-ml.run_time = 
+ml.run_time =
   cv_model$times$everything['elapsed'] + cv_model$times$final['elapsed']
 
 # save
