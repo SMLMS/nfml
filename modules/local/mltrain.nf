@@ -5,8 +5,8 @@ process MLTRAIN {
     //This lists the required conda recipes for running  the process with conda, below the container URLs are listed that are built on "bioconda/multi-package-containers", see PR https://github.com/BioContainers/multi-package-containers/pull/2509
     conda "conda-forge::r-base conda-forge::r-tidyverse=1.3.1 conda-forge::r-data.table=1.14.6 conda-forge::r-caret=6.0_93"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/mulled-v2-8849acf39a43cdd6c839a369a74c0adc823e2f91:ab110436faf952a33575c64dd74615a84011450b-0' :
-        'quay.io/biocontainers/mulled-v2-8849acf39a43cdd6c839a369a74c0adc823e2f91:ab110436faf952a33575c64dd74615a84011450b-0' }"
+        'https://depot.galaxyproject.org/singularity/mulled-v2-4eab235fcbfce7261ccbf98de3bffb97f765d3d2:0b703f4d953cb368358a647821708bf28f1ebbad-0' :
+        'quay.io/biocontainers/mulled-v2-4eab235fcbfce7261ccbf98de3bffb97f765d3d2:0b703f4d953cb368358a647821708bf28f1ebbad-0' }"
 
     path json_files
 
