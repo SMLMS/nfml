@@ -1,0 +1,13 @@
+name.out	testFit
+file.data	./example_data/data.mtcars.csv
+file.samples.train	./example_data/samples.mtcars.train.txt
+file.features	./example_data/features.mtcars.txt
+ml.seed	42
+ml.method	pcr
+ml.response	mpg
+ml.preProcess	c('center', 'scale')
+ml.fold	5
+ml.repeats	10
+ml.grid	pcr_v002
+ml.run_time	1.417
+note.log	I like machine learning

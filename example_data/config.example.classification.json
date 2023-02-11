@@ -1,0 +1,29 @@
+{
+    "fit.id": "testFitClassification",
+    "file.data": "./example_data/data.iris.csv",
+    "file.features.train": "./example_data/features.predictive.iris.txt",
+    "file.features.resample": "./example_data/features.trivial.iris.txt",
+    "file.samples.train": "./example_data/samples.iris.train.txt",
+    "ml.sampleID": "sample.id",
+    "ml.type": "classification",
+    "ml.response": "Species",
+    "ml.method": "ranger",
+    "ml.preprocess": ["center", "scale"],
+    "ml.seed": "42",
+    "ml.cv": {
+      "method": "repeatedcv",
+      "fold": "5",
+      "repeats": "10",
+      "grid.library": "./ml_grids.R",
+      "tune.grid": "none",
+      "tune.length": "10"
+    },
+    "ml.bootstrap": {
+      "n.resamples": "10",
+      "n.permutations": "100",
+      "strata.var": "NULL"
+    },
+    "list.samples.test": [],
+    "note": "I like machine learning"
+  }
+  

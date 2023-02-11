@@ -1,0 +1,15 @@
+name.out	testFitRegression	testFitRegression
+file.data	./example_data/data.mtcars.csv	./example_data/data.mtcars.csv
+file.samples.train	./example_data/samples.mtcars.train.txt	./example_data/samples.mtcars.train.txt
+file.features.train	./example_data/features.mtcars.txt	./example_data/features.mtcars.txt
+ml.sampleID	sampleId	sampleId
+ml.seed	42	42
+ml.type	regression	regression
+ml.method	pcr	pcr
+ml.response	mpg	mpg
+ml.preProcess	center	scale
+ml.fold	5	5
+ml.repeats	10	10
+ml.grid	none	none
+ml.run_time	2.74	2.74
+note.log	I like machine learning	I like machine learning
