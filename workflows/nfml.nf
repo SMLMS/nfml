@@ -75,7 +75,7 @@ workflow NFML {
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
-    //
+    
     // MODULE: Run MLVALIDATE
 
     MLVALIDATE (
