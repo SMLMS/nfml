@@ -37,7 +37,7 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { MLTRAIN } from '../modules/local/mltrain'
-
+include { MLVALIDATE } from '../modules/local/mlvalidate'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -76,7 +76,15 @@ workflow NFML {
     )
 
     //
-    // MODULE: MultiQC
+    // MODULE: Run MLVALIDATE
+
+    MLVALIDATE (
+        ch_input
+    )
+    ch_versions.mix(MLVALIDATE.out.versions)
+
+
+
     //
     workflow_summary    = WorkflowNfml.paramsSummaryMultiqc(workflow, summary_params)
     ch_workflow_summary = Channel.value(workflow_summary)
