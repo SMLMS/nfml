@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library("optparse")
 library("rjson")
 library("data.table")
@@ -18,11 +19,11 @@ source('./ml_funcs.R')
 #' @return An instance of type 'optparse::OptionParser'.
 create_parser = function(){
 option_list = list(
-  make_option(c("-f", "--file"), type="character", default=NULL, 
+  make_option(c("-f", "--file"), type="character", default=NULL,
               help="config file name", metavar="character"),
-  make_option(c("-m", "--method"), type="character", default="none", 
+  make_option(c("-m", "--method"), type="character", default="none",
                help="method of permutation. Options are (none, features, response). [default= %default]", metavar="character"),
-  make_option(c("-c", "--cores"), type="integer", default=1, 
+  make_option(c("-c", "--cores"), type="integer", default=1,
               help="available cores for multi-processing [default= %default]", metavar="character")
 )
 
@@ -42,7 +43,7 @@ return(opt)
 #' and runs the experiment according to the user-defined parameters.
 #' @param seed sets the seed for the random number generator to guarantee reproducibility.
 #' (int)
-#' @param data_df data frame to be learned from. 
+#' @param data_df data frame to be learned from.
 #' (tibble::tibble)
 #' @param parser_inst instance of parser object. (optparse::parse_args).
 #' @param model_inst instance of caret_train object (caret::train).
@@ -51,7 +52,7 @@ return(opt)
 create_resample_experiment = function(seed, data_df, parser_inst,  model_inst, config_inst, n_features){
   #set seed
   set.seed(seed)
-  
+
   # create Resampler instance
   resampler_inst = Resampler$new(permute = parser_inst$method,
                                  n_resample = as.integer(config_inst$ml.bootstrap$n.resamples),
@@ -63,11 +64,11 @@ create_resample_experiment = function(seed, data_df, parser_inst,  model_inst, c
                                  n_features = as.integer(n_features),
                                  strata_var = NULL)
   # strata_var is not yet implemented!! How to handle empty variable?
-  
+
   # Train model
   resampler_inst$fit(data_df = data_df)
-  
-  # return trained object 
+
+  # return trained object
   return(resampler_inst)
 }
 
@@ -81,7 +82,7 @@ create_resample_experiment = function(seed, data_df, parser_inst,  model_inst, c
 main = function(){
   # get command line arguments
   parser_inst <- create_parser()
-  
+
   # set up environment for parallel computing
   n_cores <- parallel::detectCores()
   if(parser_inst$cores == 1){
@@ -95,31 +96,31 @@ main = function(){
     print(sprintf("running in parallel on %i cores", parser_inst$cores))
     future::plan(strategy = "multisession", workers = parser_inst$cores)
   }
-  
+
   # define start time
   start_time <- Sys.time()
-  
+
   # read config
   config_inst <- rjson::fromJSON(file = parser_inst$file)
-  
+
   # read model
   path_to_model <- paste0('./fits/', config_inst$fit.id, '.rds')
   model_inst <- read_rds(path_to_model)
-  
+
   # read data
   data_df <- data.table::fread(config_inst$file.data) %>%
     tibble::column_to_rownames(config_inst$ml.sampleID) %>%
     as.data.frame()
-  
+
   # read samples
   samples_lst <- read.csv(config_inst$file.samples.train, header = FALSE)$V1
-  
+
   # read features
   train_features_lst <- read.csv(config_inst$file.features.train, header = FALSE)$V1
   resample_features_lst <- read.csv(config_inst$file.features.resample, header = FALSE)$V1
   complete_features_lst <- append(train_features_lst, resample_features_lst)
   n_features <- length(train_features_lst)
-  
+
   # filter data
   filtered_df <- switch (parser_inst$method,
     'none' = {
@@ -172,11 +173,11 @@ main = function(){
     path_to_confusion_file <- sprintf("./fits/%s_permute_%s_bootstrap_confusion.csv", config_inst$fit.id,  parser_inst$method)
     readr::write_csv(confusion_df, path_to_confusion_file)
   }
-  
+
   # log computation time
   end_time = Sys.time()
   run_time = end_time - start_time
-  
+
   # save experimental conditions
   file.log = sprintf("./fits/%s_permute_%s_bootstrap.log", config_inst$fit.id,  parser_inst$method)
   write.table(t(

@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 # format response variable
 # TODO: add ml.type == survival
 format_y = function(y, ml.type){

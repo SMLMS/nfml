@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library("tidyverse")
 library("tidymodels")
 library("caret")
@@ -29,23 +30,23 @@ library("R6")
 #' \dontrun{
 #'   library("caret")
 #'   data(iris)
-#'   
+#'
 #'   iris_df <- iris
-#'   
+#'
 #'   trControl = caret::trainControl(
-#'     method = "repeatedcv", 
-#'     number = 5, 
+#'     method = "repeatedcv",
+#'     number = 5,
 #'     repeats = 10)
-#'  
+#'
 #'   cv_model = caret::train(
 #'     y = iris_df$Species,
-#'     x = dplyr::select(iris_df, -Species), 
+#'     x = dplyr::select(iris_df, -Species),
 #'     method = "ranger",
 #'     preProcess = c('scale', 'center'),
 #'     trControl = trControl,
 #'     tuneGrid = NULL, # NOTE: if NULL tuneLength is used
 #'     tuneLength = 10)
-#'  
+#'
 #'   resampler_inst = Resampler$new(permute = "response",
 #'                                  n_resample = 5,
 #'                                  ml_method = "ranger",
@@ -55,9 +56,9 @@ library("R6")
 #'                                  response_var = "Species",
 #'                                  n_features = 4,
 #'                                  strata_var = NULL)#config_inst$ml.bootstrap$strata_var
-#'   
+#'
 #'   resampler_inst$fit(data_df = iris_df)
-#'}   
+#'}
 #'
 #'
 #' @author Sebastian Malkusch
@@ -86,7 +87,7 @@ Resampler = R6::R6Class("Resampler",
                           #####################
                           # private functions #
                           #####################
-                          #' @description 
+                          #' @description
                           #' checks, if permutation is requested.
                           #' If true, performs the permutation task.
                           .permute_data = function(data_df = "tbl_df"){
@@ -111,7 +112,7 @@ Resampler = R6::R6Class("Resampler",
                                    }
                                    )
                           },
-                          #' @description 
+                          #' @description
                           #' Checks if ml.type is classification.
                           #' If true, calculates confusion matrix.
                           .analyze_confusion = function(boot_mod_inst = "caret::train"){
@@ -122,7 +123,7 @@ Resampler = R6::R6Class("Resampler",
                                 tibble::as_tibble() %>%
                                 dplyr::mutate(n_resample = conf_mat$B)
                             }
-                            
+
                           }
                         ),
                         ####################
@@ -294,7 +295,7 @@ Resampler = R6::R6Class("Resampler",
                           },
                           #' @description
                           #' Runs the bootstrap analysis based on the instance
-                          #' variables chosen under initialize. 
+                          #' variables chosen under initialize.
                           #' @param data_df
                           #' data set to be analyzed (tibble::tibble).
                           #' @return
@@ -302,15 +303,15 @@ Resampler = R6::R6Class("Resampler",
                           fit = function(data_df = "tbl_df"){
                             # reset result variable
                             private$.metrics_df <- tibble::tibble()
-                            
+
                             # permute data according to permute instance variable
                             permuted_df <- private$.permute_data(data_df = data_df)
-                            
-                            
+
+
                             # create bootstrap object
                             bootstrap_obj <- rsample::bootstraps(permuted_df, times = self$n_resample, strata = dplyr::all_of(self$strata_var), apparent = FALSE) %>%
                               rsample::rsample2caret()
-                            
+
                             # design bootstrap by creating a caret trainControl object
                             bs_control_obj <- caret::trainControl(index = bootstrap_obj$index,
                                                                   indexOut = bootstrap_obj$indexOut,
@@ -318,7 +319,7 @@ Resampler = R6::R6Class("Resampler",
                                                                   returnResamp = "final",
                                                                   classProbs = FALSE,
                                                                   allowParallel = TRUE)
-                            
+
                             # run experiment
                             boot_mod_inst <- caret::train(
                               x = dplyr::select(permuted_df, -dplyr::all_of(self$response_var)),
@@ -329,7 +330,7 @@ Resampler = R6::R6Class("Resampler",
                               tuneGrid = self$hyper_parameters,
                               trControl = bs_control_obj
                             )
-                            
+
                             # Lumpensammler
                             private$.metrics_df <- boot_mod_inst$resample
                             private$.analyze_confusion(boot_mod_inst)

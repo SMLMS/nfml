@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 
 list.grids = list(
   # if tuneLength is used instead of tuneGrid
@@ -26,22 +27,22 @@ list.grids = list(
     nrounds = 1000,
     eta = c(0.001, 0.005, 0.01, 0.02, 0.05, 0.1),
     max_depth = c(4, 6, 8),
-    gamma = c(3, 4, 5), 
+    gamma = c(3, 4, 5),
     subsample = c(0.5, 0.75),
-    min_child_weight = c(3), 
+    min_child_weight = c(3),
     colsample_bytree = 1),
   xgbTree_vTest = expand.grid(
     nrounds = 1000,
     eta = c(0.001, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.3),
     max_depth = c(2, 4, 6, 8, 10),
-    gamma = c(1, 2, 3), 
+    gamma = c(1, 2, 3),
     subsample = c(0.5, 0.75, 1),
-    min_child_weight = c(1, 2, 3), 
+    min_child_weight = c(1, 2, 3),
     colsample_bytree = 1),
   # spls
   spls_v001 = expand.grid(
-    eta = seq(from = 0.1, to = 0.9, by = 0.2), 
-    K = 1:10, 
+    eta = seq(from = 0.1, to = 0.9, by = 0.2),
+    K = 1:10,
     kappa = 0.5),
   # rf
   ranger_v001 = expand.grid(
@@ -54,18 +55,18 @@ list.grids = list(
     min.node.size = 3:10),
   # GBM
   gbm_v001 = expand.grid(
-    interaction.depth = c(1, 5, 9), 
-    n.trees = (1:30)*50, 
+    interaction.depth = c(1, 5, 9),
+    n.trees = (1:30)*50,
     shrinkage = c(0.01, 0.1),
     n.minobsinnode = 10),
   gbm_v002 = expand.grid(
-    interaction.depth = c(1, 5), 
-    n.trees = (20:60)*50, 
+    interaction.depth = c(1, 5),
+    n.trees = (20:60)*50,
     shrinkage = c(0.001, 0.01, 0.1),
     n.minobsinnode = 10),
   gbm_v003 = expand.grid(
-    interaction.depth = c(1, 5), 
-    n.trees = (20:60)*50, 
+    interaction.depth = c(1, 5),
+    n.trees = (20:60)*50,
     shrinkage = c(0.001, 0.01, 0.1),
     n.minobsinnode = 1)
 )
@@ -78,5 +79,5 @@ list.grids = list(
 #     lower = c(0.001, 1),
 #     upper = c(0.999, 20)
 #   )
-#   
+#
 # )

@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 # v0.3
 
 # start
@@ -20,7 +22,7 @@ cv_model = read_rds(file.rds)
 # data
 # NOTE: using fread because it's faster
 df.data = data.table::fread(config$file.data) %>%
-  tibble::column_to_rownames(config$ml.sampleID)
+    tibble::column_to_rownames(config$ml.sampleID)
 
 # features
 list.features = colnames(cv_model$trainingData)[-ncol(cv_model$trainingData)]
@@ -28,11 +30,11 @@ list.features = colnames(cv_model$trainingData)[-ncol(cv_model$trainingData)]
 # prepare list with test samples
 list.test = lapply(config$list.samples.test, function(x)
   # read in samples test
-  read.csv(x$file, header = F)$V1) %>%
+    read.csv(x$file, header = F)$V1) %>%
   # assign names
-  magrittr::set_names(lapply(config$list.samples.test, function(x) x$name))
+    magrittr::set_names(lapply(config$list.samples.test, function(x) x$name))
 
-#' write function to 
+#' write function to
 #' - bootstrap performance variable
 #' - re-sample response variable
 #' - evaluate performance in context of re-sampled runs
