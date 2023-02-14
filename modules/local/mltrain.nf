@@ -8,6 +8,7 @@ process MLTRAIN {
         'https://depot.galaxyproject.org/singularity/mulled-v2-4eab235fcbfce7261ccbf98de3bffb97f765d3d2:0b703f4d953cb368358a647821708bf28f1ebbad-0' :
         'quay.io/biocontainers/mulled-v2-4eab235fcbfce7261ccbf98de3bffb97f765d3d2:0b703f4d953cb368358a647821708bf28f1ebbad-0' }"
 
+    input:
     path json_files
 
     output:
