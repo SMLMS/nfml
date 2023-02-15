@@ -37,7 +37,6 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { MLTRAIN } from '../modules/local/mltrain'
-include { MLFUNCS } from '../modules/local/mlfuncs'
 include { MLVALIDATE } from '../modules/local/mlvalidate'
 
 /*
@@ -49,6 +48,7 @@ include { MLVALIDATE } from '../modules/local/mlvalidate'
 //
 // MODULE: Installed directly from nf-core/modules
 
+include { MULTIQC } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 
 /*
@@ -64,7 +64,6 @@ workflow NFML {
 
     ch_versions = Channel.empty()
 
-
     // MODULE: Run MLTRAIN
     MLTRAIN (
         ch_input
@@ -72,7 +71,6 @@ workflow NFML {
     ch_versions.mix(MLTRAIN.out.versions)
 
     // MODULE: Run MLVALIDATE
-
     MLVALIDATE (
         ch_input
         MLTRAIN.out.rds
@@ -85,7 +83,7 @@ workflow NFML {
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
-    //
+    //This defines the workflow summary, do not modify
     workflow_summary    = WorkflowNfml.paramsSummaryMultiqc(workflow, summary_params)
     ch_workflow_summary = Channel.value(workflow_summary)
 
