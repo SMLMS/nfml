@@ -69,28 +69,21 @@ workflow NFML {
     MLTRAIN (
         ch_input
     )
-
     ch_versions.mix(MLTRAIN.out.versions)
-
-    CUSTOM_DUMPSOFTWAREVERSIONS (
-        ch_versions.unique().collectFile(name: 'collated_versions.yml')
-    )
-
-    // MODULE: Run MLFUNCS
-
-    MLFUNCS (
-        ch_input
-    )
-
-    ch_versions.mix(MLFUNCS.out.versions)
-
 
     // MODULE: Run MLVALIDATE
 
     MLVALIDATE (
         ch_input
+        MLTRAIN.out.rds
     )
     ch_versions.mix(MLVALIDATE.out.versions)
+
+    //TODO here the other modules have to be chained together
+
+    CUSTOM_DUMPSOFTWAREVERSIONS (
+        ch_versions.unique().collectFile(name: 'collated_versions.yml')
+    )
 
     //
     workflow_summary    = WorkflowNfml.paramsSummaryMultiqc(workflow, summary_params)

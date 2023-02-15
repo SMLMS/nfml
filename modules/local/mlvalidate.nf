@@ -9,8 +9,8 @@ process MLVALIDATE {
         'quay.io/biocontainers/mulled-v2-4eab235fcbfce7261ccbf98de3bffb97f765d3d2:0b703f4d953cb368358a647821708bf28f1ebbad-0' }"
 
     input:
-
-    path json_files
+    path rds
+    path config
 
     output:
     path "*.rds", emit: rds
@@ -25,7 +25,7 @@ process MLVALIDATE {
     def args = task.ext.args ?: ''
 
     """
-    ml_validate.R $json_files
+    ml_validate.R $rds $config
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

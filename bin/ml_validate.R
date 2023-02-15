@@ -6,18 +6,20 @@
 start_time = Sys.time()
 
 # pass arguments
+# args[1] = config in JSON format
+# args[2] = path to previously computed rds file
 args = commandArgs(trailingOnly=TRUE)
 
 # read config file
 config = rjson::fromJSON(file = args[1])
-#config = rjson::fromJSON(file = './example_data/config.example.regression.json')
+trained_model_path = args[2]
 
 # source
 source('./ml_funcs.R')
 
 # load trained model
-file.rds = paste0('./fits/', config$fit.id, '.rds')
-cv_model = read_rds(file.rds)
+#file.rds = paste0('./fits/', config$fit.id, '.rds')
+cv_model = read_rds(trained_model_path)
 
 # data
 # NOTE: using fread because it's faster
