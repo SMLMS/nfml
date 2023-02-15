@@ -71,11 +71,11 @@ workflow NFML {
     ch_versions.mix(MLTRAIN.out.versions)
 
     // MODULE: Run MLVALIDATE
-    MLVALIDATE (
-        ch_input
-        MLTRAIN.out.rds
-    )
-    ch_versions.mix(MLVALIDATE.out.versions)
+    // MLVALIDATE (
+    //     MLTRAIN.out.config
+    //     MLTRAIN.out.rds
+    // )
+    // ch_versions.mix(MLVALIDATE.out.versions)
 
     //TODO here the other modules have to be chained together
 

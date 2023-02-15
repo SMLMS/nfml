@@ -12,8 +12,9 @@ process MLTRAIN {
     path json_files
 
     output:
-    path "*.rds", emit: rds
-    path "*.log", emit: log
+    path("*.rds"), emit: rds
+    path("*.log"), emit: log
+    path("*.json"), emit: config
     path "versions.yml"           , emit: versions
 
     when:
