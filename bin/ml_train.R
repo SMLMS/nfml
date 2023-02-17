@@ -25,8 +25,8 @@ source('./ml_funcs.R')
 
 # output
 # TODO: find out how relative paths work with nf
-file.rds = paste0('./fits/', config$fit.id, '.rds')
-file.log = paste0('./fits/', config$fit.id, '.log')
+file.rds = paste0('./', config$fit.id, '.rds')
+file.log = paste0('./', config$fit.id, '.log')
 
 # data
 # NOTE: using fread because it's faster
