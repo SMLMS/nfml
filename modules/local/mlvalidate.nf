@@ -14,8 +14,8 @@ process MLVALIDATE {
     path ml_custom_scripts
 
     output:
-    path "*.rds", emit: rds
-    path "*.log", emit: log
+    path "*.csv", emit: csv
+    path "*_mqc.csv", emit: multiqc_csv
     path "versions.yml"           , emit: versions
 
     when:
@@ -26,7 +26,7 @@ process MLVALIDATE {
 
     """
     ml_validate.R $rds $config
-
+    cp *.csv mlvalidate_mqc.csv
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         mlvalidate: 0.3
@@ -37,7 +37,6 @@ process MLVALIDATE {
         r-furrr: \$(Rscript -e "library(furrr); cat(as.character(packageVersion('furrr')))")
         r-purrr: \$(Rscript -e "library(purrr); cat(as.character(packageVersion('purrr')))")
         r-optparse: \$(Rscript -e "library(optparse); cat(as.character(packageVersion('optparse')))")
-        r-r6: \$(Rscript -e "library(r6); cat(as.character(packageVersion('r6')))")
         r-tidymodels: \$(Rscript -e "library(tidymodels); cat(as.character(packageVersion('tidymodels')))")
     END_VERSIONS
     """

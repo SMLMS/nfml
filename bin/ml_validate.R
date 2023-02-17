@@ -7,6 +7,8 @@ library("tidyverse")
 library("purrr")
 library("furrr")
 library("parallel")
+library("caret")
+
 # v0.3
 
 # start
@@ -60,7 +62,7 @@ df.eval = lapply(list.test, function(x){
   data.table
 
 # write output
-fwrite(df.eval, paste0('./fits/', config$fit.id, '_eval.csv'))
+fwrite(df.eval, paste0('./', config$fit.id, '_eval.csv'))
 
 
 #' TODO:
