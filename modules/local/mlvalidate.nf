@@ -34,11 +34,11 @@ process MLVALIDATE {
         r-tidyverse: \$(Rscript -e "library(tidyverse); cat(as.character(packageVersion('tidyverse')))")
         r-data.table: \$(Rscript -e "library(data.table); cat(as.character(packageVersion('data.table')))")
         r-caret: \$(Rscript -e "library(caret); cat(as.character(packageVersion('caret')))")
-        r-furrr: \$(Rscript -e "library(caret); cat(as.character(packageVersion('furrr')))")
-        r-purrr: \$(Rscript -e "library(caret); cat(as.character(packageVersion('purrr')))")
-        r-optparse: \$(Rscript -e "library(caret); cat(as.character(packageVersion('optparse')))")
-        r-r6: \$(Rscript -e "library(caret); cat(as.character(packageVersion('r6')))")
-        r-tidymodels: \$(Rscript -e "library(caret); cat(as.character(packageVersion('tidymodels')))")
+        r-furrr: \$(Rscript -e "library(furrr); cat(as.character(packageVersion('furrr')))")
+        r-purrr: \$(Rscript -e "library(purrr); cat(as.character(packageVersion('purrr')))")
+        r-optparse: \$(Rscript -e "library(optparse); cat(as.character(packageVersion('optparse')))")
+        r-r6: \$(Rscript -e "library(r6); cat(as.character(packageVersion('r6')))")
+        r-tidymodels: \$(Rscript -e "library(tidymodels); cat(as.character(packageVersion('tidymodels')))")
     END_VERSIONS
     """
 }
