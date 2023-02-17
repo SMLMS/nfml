@@ -16,6 +16,7 @@ process MLTRAIN {
     path("*.rds"), emit: rds
     path("*.log"), emit: log
     path("*.json"), emit: config
+    path("*_mqc.log"), emit: multiqc_log
     path "versions.yml"           , emit: versions
 
     when:
@@ -28,6 +29,7 @@ process MLTRAIN {
     ml_train.R $json_files
 
     cp $json_files config.json
+    cp *.log ml_train_mqc.log
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
