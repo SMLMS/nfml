@@ -11,6 +11,7 @@ process MLVALIDATE {
     input:
     path rds
     path config
+    path ml_custom_scripts
 
     output:
     path "*.rds", emit: rds

@@ -10,6 +10,7 @@ process MLTRAIN {
 
     input:
     path json_files
+    path ml_funcs
 
     output:
     path("*.rds"), emit: rds

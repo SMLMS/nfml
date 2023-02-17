@@ -1,5 +1,13 @@
 #!/usr/bin/env Rscript
 
+library("optparse")
+library("rjson")
+library("data.table")
+library("tidyverse")
+library("purrr")
+library("furrr")
+library("parallel")
+
 # start
 start_time = Sys.time()
 
@@ -12,7 +20,7 @@ config = rjson::fromJSON(file = args[1])
 
 # sources
 # TODO: The grid library will be replaced by the dials package
-source(config$ml.cv$grid.library)
+source('./ml_grids.R')
 source('./ml_funcs.R')
 
 # output

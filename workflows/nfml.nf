@@ -26,6 +26,7 @@ ch_multiqc_config          = Channel.fromPath("$projectDir/assets/multiqc_config
 ch_multiqc_custom_config   = params.multiqc_config ? Channel.fromPath( params.multiqc_config, checkIfExists: true ) : Channel.empty()
 ch_multiqc_logo            = params.multiqc_logo   ? Channel.fromPath( params.multiqc_logo, checkIfExists: true ) : Channel.empty()
 ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
+ch_ml_custom_scripts = Channel.fromPath("$projectDir/bin/ml_{grids,funcs}.R", checkIfExists: true).collect()
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,16 +67,18 @@ workflow NFML {
 
     // MODULE: Run MLTRAIN
     MLTRAIN (
-        ch_input
+        ch_input,
+        ch_ml_custom_scripts
     )
     ch_versions.mix(MLTRAIN.out.versions)
 
     // MODULE: Run MLVALIDATE
-    // MLVALIDATE (
-    //     MLTRAIN.out.config
-    //     MLTRAIN.out.rds
-    // )
-    // ch_versions.mix(MLVALIDATE.out.versions)
+    MLVALIDATE (
+        MLTRAIN.out.config,
+        MLTRAIN.out.rds,
+        ch_ml_custom_scripts
+    )
+    ch_versions.mix(MLVALIDATE.out.versions)
 
     //TODO here the other modules have to be chained together
 
