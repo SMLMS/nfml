@@ -46,11 +46,18 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
 4. Start running your own analysis!
 
-   <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
+This is running the analysis with conda:
 
-   ```bash
-   nextflow run main.nf --input example_data/config.example.regression.json --outdir results -profile docker
-   ```
+```bash
+   nextflow run main.nf --input example_data/config.example.regression.json --outdir results -profile conda
+```
+
+This with docker:
+
+```bash
+
+nextflow run main.nf --input example_data/config.example.regression.json --outdir results -profile docker
+```
 
 ## Documentation
 
@@ -58,7 +65,7 @@ The nf-core/nfml pipeline comes with documentation about the pipeline [usage](ht
 
 ## Credits
 
-nf-core/nfml was originally written by Luria, Sebastian, Kolja, Alex.
+nf-core/nfml was originally written by Luria Leslie Funou, Sebastian Malkusch, Kolja Becker and Alexander Peltzer.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
