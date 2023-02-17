@@ -1,9 +1,9 @@
 {
     "fit.id": "testFitClassification",
-    "file.data": "./example_data/data.iris.csv",
-    "file.features.train": "./example_data/features.predictive.iris.txt",
-    "file.features.resample": "./example_data/features.trivial.iris.txt",
-    "file.samples.train": "./example_data/samples.iris.train.txt",
+    "file.data": "/workspace/nfml/example_data/data.iris.csv",
+    "file.features.train": "/workspace/nfml/example_data/features.predictive.iris.txt",
+    "file.features.resample": "/workspace/nfml/example_data/features.trivial.iris.txt",
+    "file.samples.train": "/workspace/nfml/example_data/samples.iris.train.txt",
     "ml.sampleID": "sample.id",
     "ml.type": "classification",
     "ml.response": "Species",
@@ -26,4 +26,3 @@
     "list.samples.test": [],
     "note": "I like machine learning"
   }
-  

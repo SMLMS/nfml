@@ -1,9 +1,9 @@
 {
     "fit.id": "testFitRegression",
-    "file.data": "./example_data/data.mtcars.csv",
-    "file.features.train": "./example_data/features.mtcars.txt",
+    "file.data": "/workspace/nfml/example_data/data.mtcars.csv",
+    "file.features.train": "/workspace/nfml/example_data/features.mtcars.txt",
     "file.features.resample": null,
-    "file.samples.train": "./example_data/samples.mtcars.train.txt",
+    "file.samples.train": "/workspace/nfml/example_data/samples.mtcars.train.txt",
     "ml.sampleID": "sampleId",
     "ml.type": "regression",
     "ml.response": "mpg",
@@ -25,9 +25,9 @@
     },
     "list.samples.test": [
       {"name": "test_001",
-       "file": "./example_data/samples.mtcars.test_001.txt"},
+       "file": "/workspace/nfml/example_data/samples.mtcars.test_001.txt"},
       {"name": "test_002",
-       "file": "./example_data/samples.mtcars.test_002.txt"}
+       "file": "/workspace/nfml/example_data/samples.mtcars.test_002.txt"}
        ],
   "note": "I like machine learning"
 }
