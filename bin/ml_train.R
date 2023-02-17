@@ -84,6 +84,7 @@ write.table(t(
   file.log, row.names = T, quote = F, col.names = F, sep='\t')
 
 # stop
-end_time = Sys.time()
-run_time = end_time - start_time
-print(run_time)
+#Nextflow tracks runtime, so this is not required - we even get nicer plots / info on how things are running / perform with memory/cpu usage.
+#end_time = Sys.time()
+#run_time = end_time - start_time
+#print(run_time)
