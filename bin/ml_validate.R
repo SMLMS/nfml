@@ -1,5 +1,12 @@
 #!/usr/bin/env Rscript
 
+library("optparse")
+library("rjson")
+library("data.table")
+library("tidyverse")
+library("purrr")
+library("furrr")
+library("parallel")
 # v0.3
 
 # start
@@ -19,7 +26,7 @@ source('./ml_funcs.R')
 
 # load trained model
 #file.rds = paste0('./fits/', config$fit.id, '.rds')
-cv_model = read_rds(trained_model_path)
+cv_model = readRDS(trained_model_path)
 
 # data
 # NOTE: using fread because it's faster
