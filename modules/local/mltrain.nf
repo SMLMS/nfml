@@ -27,6 +27,8 @@ process MLTRAIN {
     """
     ml_train.R $json_files
 
+    cp $json_files config.json
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         mltrain: 0.3
