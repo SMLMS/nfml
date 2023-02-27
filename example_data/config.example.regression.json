@@ -23,6 +23,9 @@
       "n.permutations": "100",
       "strata.var": "NULL"
     },
+     "ml.interpret":{
+      "n.repeats": "100"
+    },
     "list.samples.test": [
       {"name": "test_001",
        "file": "/workspace/nfml/example_data/samples.mtcars.test_001.txt"},

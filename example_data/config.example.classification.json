@@ -23,6 +23,9 @@
       "n.permutations": "100",
       "strata.var": "NULL"
     },
+     "ml.interpret":{
+      "n.repeats": "100"
+    },
     "list.samples.test": [],
     "note": "I like machine learning"
   }
