@@ -13,9 +13,13 @@ start_time = Sys.time()
 
 # pass arguments
 args = commandArgs(trailingOnly=TRUE)
+file.config = args[1]
+file.data = args[2]
+file.samples.train = args[3]
+file.features.train = args[4]
 
 # read config file
-config = rjson::fromJSON(file = args[1])
+config = rjson::fromJSON(file = file.config)
 #config = rjson::fromJSON(file = './example_data/config.example.regression.json')
 
 # sources
@@ -30,14 +34,14 @@ file.log = paste0('./', config$fit.id, '.log')
 
 # data
 # NOTE: using fread because it's faster
-df.data = data.table::fread(config$file.data) %>%
+df.data = data.table::fread(file.data) %>%
   tibble::column_to_rownames(config$ml.sampleID)
 
 # samples
-list.samples = read.csv(config$file.samples.train, header = F)$V1
+list.samples = read.csv(file.samples.train, header = F)$V1
 
 # features
-list.features = read.csv(config$file.features.train, header = F)$V1
+list.features = read.csv(file.features.train, header = F)$V1
 
 # set up trainControl
 # TODO: implement other methods such as jackknife, bootstrap, ...
@@ -67,9 +71,9 @@ saveRDS(cv_model, file.rds)
 write.table(t(
   data.frame(
     name.out = config$fit.id,
-    file.data = config$file.data,
-    file.samples.train = config$file.samples.train,
-    file.features.train = config$file.features.train,
+    file.data = file.data,
+    file.samples.train = file.samples.train,
+    file.features.train = file.features.train,
     ml.sampleID = config$ml.sampleID,
     ml.seed = config$ml.seed,
     ml.type = config$ml.type,
