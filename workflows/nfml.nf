@@ -15,6 +15,9 @@ for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true
 
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input JSON not specified!' }
+if (params.data) { ch_data = file(params.data) } else { exit 1, 'Input Data not specified!' }
+if (params.samples_train) { ch_samples_train = file(params.samples_train) } else { exit 1, 'Input Training Samples not specified!' }
+if (params.features_train) { ch_features_train = file(params.features_train) } else { exit 1, 'Input Feature Samples not specified!' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,8 +71,12 @@ workflow NFML {
     // MODULE: Run MLTRAIN
     MLTRAIN (
         ch_input,
+        ch_data,
+        ch_samples_train,
+        ch_features_train,
         ch_ml_custom_scripts
     )
+
     ch_versions.mix(MLTRAIN.out.versions)
 
     // MODULE: Run MLVALIDATE

@@ -10,6 +10,9 @@ process MLTRAIN {
 
     input:
     path json_files
+    path data
+    path samples_train
+    path features_train
     path ml_funcs
 
     output:
@@ -26,7 +29,7 @@ process MLTRAIN {
     def args = task.ext.args ?: ''
 
     """
-    ml_train.R $json_files
+    ml_train.R $json_files $data $samples_train $features_train
 
     cp $json_files config.json
     cp *.log ml_train_mqc.log
