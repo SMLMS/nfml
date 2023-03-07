@@ -5,8 +5,8 @@ process MLVALIDATE {
     //This lists the required conda recipes for running  the process with conda, below the container URLs are listed that are built on "bioconda/multi-package-containers", see PR https://github.com/BioContainers/multi-package-containers/pull/2509
     conda "conda-forge::r-base conda-forge::r-tidyverse=1.3.1 conda-forge::r-data.table=1.14.6 conda-forge::r-caret=6.0_93 conda-forge::r-rjson=0.2.21 conda-forge::r-furrr=0.3.1 conda-forge::r-purrr=1.0.1 conda-forge::r-optparse=1.7.3 conda-forge::r-r6=2.5.1 conda-forge::r-tidymodels=1.0.0 conda-forge::r-pls=2.8_1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/mulled-v2-b5dd87919200a4a32a157766c1f46ad375a6991f:212e289fc1c54c6d488ab0ad8dc4ec56ea1fe4f3-0' :
-        'quay.io/biocontainers/mulled-v2-b5dd87919200a4a32a157766c1f46ad375a6991f:212e289fc1c54c6d488ab0ad8dc4ec56ea1fe4f3-0' }"
+        'https://depot.galaxyproject.org/singularity/mulled-v2-ca640e4b0420dd5c8440adb0c9bcc92768eb2cb5:206c711dbb9549c63abea09fc625ab10dda04329-0' :
+        'quay.io/biocontainers/mulled-v2-ca640e4b0420dd5c8440adb0c9bcc92768eb2cb5:206c711dbb9549c63abea09fc625ab10dda04329-0' }"
 
     input:
     path rds
