@@ -18,6 +18,7 @@ if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input JSON n
 if (params.data) { ch_data = file(params.data) } else { exit 1, 'Input Data not specified!' }
 if (params.samples_train) { ch_samples_train = file(params.samples_train) } else { exit 1, 'Input Training Samples not specified!' }
 if (params.features_train) { ch_features_train = file(params.features_train) } else { exit 1, 'Input Feature Samples not specified!' }
+if (params.samples_test)  { ch_samples_test = file(params.samples_test) } else { exit 1, 'Input Feature Samples not specified!' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -81,8 +82,10 @@ workflow NFML {
 
     // MODULE: Run MLVALIDATE
     MLVALIDATE (
+        ch_data,
         MLTRAIN.out.config,
         MLTRAIN.out.rds,
+        ch_samples_test,
         ch_ml_custom_scripts
     )
     ch_versions.mix(MLVALIDATE.out.versions)

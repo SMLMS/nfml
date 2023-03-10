@@ -9,8 +9,10 @@ process MLVALIDATE {
         'quay.io/biocontainers/mulled-v2-ca640e4b0420dd5c8440adb0c9bcc92768eb2cb5:206c711dbb9549c63abea09fc625ab10dda04329-0' }"
 
     input:
-    path rds
-    path config
+    path(file_data)
+    path(file_config)
+    path(file_trained_model)
+    path(test_data)
     path ml_custom_scripts
 
     output:
@@ -25,8 +27,8 @@ process MLVALIDATE {
     def args = task.ext.args ?: ''
 
     """
-    ml_validate.R $rds $config
-    cp *.csv mlvalidate_mqc.csv
+    ml_validate.R $file_data $file_config $file_trained_model $test_data
+    cp *_eval.csv mlvalidate_mqc.csv
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         mlvalidate: 0.3

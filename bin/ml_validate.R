@@ -17,7 +17,7 @@ start_time = Sys.time()
 # pass arguments
 # args[1] = config in JSON format
 # args[2] = path to previously computed rds file
-# FIXME: change inmput args (1: config, 2, 
+# FIXME: change inmput args (1: config, 2,
 args = commandArgs(trailingOnly=TRUE)
 
 # read config file
@@ -27,7 +27,7 @@ file.trained_model = args[3]
 list.samples.test = args[4:length(args)]
 
 # load config
-config = rjson::fromJSON(file.config)
+config = rjson::fromJSON(file = file.config)
 
 # source
 source('./ml_funcs.R')
