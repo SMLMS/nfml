@@ -17,33 +17,39 @@ start_time = Sys.time()
 # pass arguments
 # args[1] = config in JSON format
 # args[2] = path to previously computed rds file
+# FIXME: change inmput args (1: config, 2, 
 args = commandArgs(trailingOnly=TRUE)
 
 # read config file
-config = rjson::fromJSON(file = args[1])
-trained_model_path = args[2]
+file.data = args[1]
+file.config = args[2]
+file.trained_model = args[3]
+list.samples.test = args[4:length(args)]
+
+# load config
+config = rjson::fromJSON(file.config)
 
 # source
 source('./ml_funcs.R')
 
 # load trained model
 #file.rds = paste0('./fits/', config$fit.id, '.rds')
-cv_model = readRDS(trained_model_path)
+cv_model = readRDS(file.trained_model)
 
 # data
 # NOTE: using fread because it's faster
-df.data = data.table::fread(config$file.data) %>%
+df.data = data.table::fread(file.data) %>%
     tibble::column_to_rownames(config$ml.sampleID)
 
 # features
 list.features = colnames(cv_model$trainingData)[-ncol(cv_model$trainingData)]
 
 # prepare list with test samples
-list.test = lapply(config$list.samples.test, function(x)
+list.test = lapply(list.samples.test, function(x)
   # read in samples test
-    read.csv(x$file, header = F)$V1) %>%
+    read.csv(x, header = F)$V1) %>%
   # assign names
-    magrittr::set_names(lapply(config$list.samples.test, function(x) x$name))
+    magrittr::set_names(lapply(list.samples.test, function(x) x))
 
 #' write function to
 #' - bootstrap performance variable
